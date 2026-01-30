@@ -34,6 +34,19 @@
         #yesBtn { background: #ff4d4d; color: white; position: absolute; left: 35%; top: 50%; transform: translate(-50%, -50%); z-index: 100; }
         #noBtn { background: white; color: #000; position: absolute; left: 65%; top: 50%; transform: translate(-50%, -50%); z-index: 100; transition: 0.1s; }
         #res img { max-width: 280px; margin-top: 20px; border: 5px solid #ff4d4d; box-shadow: 10px 10px 0px #000; }
+        .pulse-text { 
+            font-size: 32px; 
+            color: #ff4d4d; 
+            margin: 20px 0; 
+            animation: pulse-animation 1.2s infinite ease-in-out; 
+            display: block;
+        }
+
+        @keyframes pulse-animation { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.2); } 
+            100% { transform: scale(1); } 
+        }
     </style>
 </head>
 <body id="bg">
@@ -78,7 +91,7 @@
         // وظيفة الضغط على YES
         yesBtn.addEventListener('click', () => {
             ques.innerHTML = "YAY! SEE YOU SOON! 💋";
-            res.innerHTML = '<img src="myhug.gif.gif" alt="Love GIF">';
+            res.innerHTML = '<div class="pulse-text">shody! <3</div><img src="myhug.gif.gif">';
             document.getElementById('static-gif').style.display = 'none';
             noBtn.style.display = 'none';
             yesBtn.style.display = 'none';

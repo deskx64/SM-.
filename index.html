@@ -1,106 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            background-color: #ffdde1;
-            color: #d10056;
-            overflow: hidden;
-        }
-        #container {
-            position: relative;
-            margin-top: 50px;
-        }
-        img {
-            width: 60%;
-            border-radius: 15px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        #buttons {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
-            position: relative;
-        }
-        #yesBtn {
-            background-color: #ff4081;
-            color: white;
-        }
-        #noBtn {
-            background-color: #cccccc;
-        }
-        #lyrics {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        #finalMessage {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-
-    <script>
-        const password = "marwanisthebest";
-        let userInput = prompt("Enter the secret password to access:");
-        if (userInput !== password) {
-            document.body.innerHTML = "<h1>Access Denied ❌</h1>";
-            throw new Error("Access Denied");
-        }
-    </script>
-
-    <div id="container">
-        <h1>Will you be my Valentine? 💖</h1>
-        <img src="first-image.jpg" id="mainImage">
-        <div id="buttons">
-            <button id="yesBtn" onclick="acceptLove()">Yes 💕</button>
-            <button id="noBtn" onmousemove="avoidNo()">No 😢</button>
-        </div>
+<h1 id="question">Will you sleep by my side tonight? <br> (Without the 70cm gap)</h1>
+    
+    <div class="buttons-container">
+        <button id="yesBtn" onclick="celebrate()">Yes</button>
+        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
     </div>
 
-    <div id="finalMessage">
-        <h1>LETS GO FROM GETTING REJECTED TO BEING UR VALENTINE I LOVE YOU 💖</h1>
-        <img src="second-image.jpg">
-    </div>
-
-    <audio autoplay loop>
-        <source src="romantic-killer.mp3" type="audio/mp3">
-    </audio>
-
-    <div id="lyrics">
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7s5VQqrjBtrBgZL4pEa46S?utm_source=generator" width="300" height="80" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div id="response-area">
+        <p id="response-text"></p>
+        <img id="gif-image" style="display:none;" alt="Cute anime hug/kiss">
     </div>
 
     <script>
-        function acceptLove() {
-            document.getElementById('container').style.display = 'none';
-            document.getElementById('finalMessage').style.display = 'block';
+        const noBtn = document.getElementById('noBtn');
+        const bg = document.getElementById('bg');
+        const questionText = document.getElementById('question');
+        const responseText = document.getElementById('response-text');
+        const gifImage = document.getElementById('gif-image');
+        const colors = ['#FFD1DC', '#FFFFFF', '#ADD8E6', '#FFB6C1', '#F0F8FF']; // More pink/white/light blue shades
+
+        // Keep track of the current color index
+        let currentColorIndex = 0;
+
+        function moveButton() {
+            // Get current dimensions for bounds
+            const container = document.querySelector('.buttons-container');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Calculate random position within the container bounds
+            let newX = Math.random() * (containerRect.width - btnRect.width);
+            let newY = Math.random() * (containerRect.height - btnRect.height);
+
+            // Apply relative positioning to the container
+            noBtn.style.left = ${newX}px;
+            noBtn.style.top = ${newY}px;
+            
+            // Cycle through background colors
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            bg.style.backgroundColor = colors[currentColorIndex];
         }
 
-        function avoidNo() {
-            let noBtn = document.getElementById("noBtn");
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 50);
-            noBtn.style.position = "absolute";
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+        function celebrate() {
+            questionText.innerHTML = "Yay! See you soon! &#128150;"; // Heart emoji
+            responseText.innerText = ""; // Clear any previous text
+            
+            // GIF for anime hug/kiss in bed (replace with your GIF if needed)
+            gifImage.src = 'https://media.tenor.com/tHqg31i7XfMAAAAd/anime-love.gif'; 
+            gifImage.style.display = 'block'; // Show the GIF
+            
+            noBtn.style.display = 'none'; // Hide the 'No' button
+            document.getElementById('yesBtn').style.display = 'none'; // Hide 'Yes' button
+            bg.style.backgroundColor = '#FFB6C1'; // Set a final celebratory background color
         }
+
+        // Initial random position for 'No' button on load
+        window.onload = () => {
+             moveButton(); // Set initial position
+        };
     </script>
-
 </body>
 </html>

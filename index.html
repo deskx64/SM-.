@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question for You</title>
+    <title>My Special Website</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,169 +13,72 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Press Start 2P', cursive; /* Apply pixel font */
-            transition: background-color 0.3s ease-in-out; /* Smooth background transition */
-            background-color: #FFFFFF; /* Default background */
-            background-image: radial-gradient(circle, #000000 1px, transparent 1px);
-            background-size: 20px 20px; /* Subtle dot pattern */
-            overflow: hidden; /* Hide scrollbars if content moves outside */
+            font-family: 'Press Start 2P', cursive;
+            background-color: white;
+            background-image: radial-gradient(#000 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow: hidden;
             text-align: center;
-            color: #333; /* Darker text for contrast */
+            transition: background-color 0.2s;
         }
-
-        h1 {
-            font-size: clamp(14px, 4vw, 22px); /* Responsive font size */
-            line-height: 1.6;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .buttons-container {
-            position: relative;
-            width: 90%; /* Adjust width for smaller screens */
-            max-width: 400px; /* Max width for larger screens */
-            height: 150px; /* Space for buttons to move */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        h1 { font-size: 18px; color: #333; margin-bottom: 30px; line-height: 1.8; padding: 10px; }
+        .btn-container { position: relative; width: 100%; height: 250px; }
         button {
             padding: 15px 25px;
             font-family: 'Press Start 2P', cursive;
-            border: 3px solid #000;
-            border-radius: 5px; /* Slightly rounded corners */
+            border: 4px solid #000;
             cursor: pointer;
-            font-size: clamp(12px, 3vw, 16px);
-            text-transform: uppercase;
-            box-shadow: 4px 4px 0px 0px #000; /* Pixel-art style shadow */
-            transition: all 0.1s ease;
+            box-shadow: 4px 4px 0px #000;
+            outline: none;
         }
-
-        button:active {
-            box-shadow: 1px 1px 0px 0px #000;
-            transform: translate(3px, 3px);
-        }
-
-        #yesBtn {
-            background-color: #ff4d4d; /* Red for Yes */
-            color: white;
-            margin-right: 20px; /* Space between buttons */
-            position: absolute; /* Allow specific positioning */
-            left: 50%;
-            transform: translateX(-100%); /* Center 'Yes' button */
-        }
-
-        #noBtn {
-            background-color: #fff; /* White for No */
-            color: #333;
-            position: absolute; /* Crucial for movement */
-            transition: all 0.05s ease-out; /* Fast transition for 'no' button */
-            left: 50%;
-            transform: translateX(0%); /* Initial position for 'No' button */
-        }
-
-        #response-area {
-            margin-top: 40px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #response-area img {
-            max-width: 280px; /* Max width for GIF */
-            height: auto;
-            border: 5px solid #ff4d4d; /* Border for GIF */
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 8px 8px 0px 0px #ff4d4d; /* Stronger shadow for GIF */
-        }
-
-        #response-text {
-            font-size: clamp(14px, 5vw, 24px);
-            color: #ff4d4d;
-            margin-top: 20px;
-            line-height: 1.5;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .buttons-container {
-                height: 200px; /* More vertical space for buttons on small screens */
-            }
-            #yesBtn {
-                left: 50%;
-                transform: translateX(-50%) translateY(-50px); /* Stack buttons vertically */
-            }
-            #noBtn {
-                left: 50%;
-                transform: translateX(-50%) translateY(50px);
-            }
-        }
+        #yesBtn { background: #ff4d4d; color: white; position: absolute; left: 35%; top: 50%; transform: translate(-50%, -50%); z-index: 100; }
+        #noBtn { background: white; color: #000; position: absolute; left: 65%; top: 50%; transform: translate(-50%, -50%); z-index: 100; transition: 0.1s; }
+        #res img { max-width: 280px; margin-top: 20px; border: 5px solid #ff4d4d; box-shadow: 10px 10px 0px #000; }
     </style>
 </head>
 <body id="bg">
 
-    <h1 id="question">Will you sleep by my side tonight? <br> (Without the 70cm gap)</h1>
-    
-    <div class="buttons-container">
-        <button id="yesBtn" onclick="celebrate()">Yes</button>
-        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+    <h1 id="ques">Will you sleep by my side tonight?<br>(Without the 70cm gap)</h1>
+
+    <div class="btn-container" id="main-area">
+        <button id="yesBtn">YES</button>
+        <button id="noBtn">NO</button>
     </div>
 
-    <div id="response-area">
-        <p id="response-text"></p>
-        <img id="gif-image" style="display:none;" alt="Cute anime hug/kiss">
-    </div>
+    <div id="res"></div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
         const bg = document.getElementById('bg');
-        const questionText = document.getElementById('question');
-        const responseText = document.getElementById('response-text');
-        const gifImage = document.getElementById('gif-image');
-        const colors = ['#FFD1DC', '#FFFFFF', '#ADD8E6', '#FFB6C1', '#F0F8FF']; // More pink/white/light blue shades
+        const ques = document.getElementById('ques');
+        const res = document.getElementById('res');
 
-        // Keep track of the current color index
-        let currentColorIndex = 0;
-
-        function moveButton() {
-            // Get current dimensions for bounds
-            const container = document.querySelector('.buttons-container');
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
-
-            // Calculate random position within the container bounds
-            let newX = Math.random() * (containerRect.width - btnRect.width);
-            let newY = Math.random() * (containerRect.height - btnRect.height);
-
-            // Apply relative positioning to the container
-            noBtn.style.left = ${newX}px;
-            noBtn.style.top = ${newY}px;
+        // وظيفة تحريك زر الـ NO
+        function moveNo() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
-            // Cycle through background colors
-            currentColorIndex = (currentColorIndex + 1) % colors.length;
-            bg.style.backgroundColor = colors[currentColorIndex];
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            
+            // تغيير لون الخلفية بين الوردي والأبيض
+            bg.style.backgroundColor = (bg.style.backgroundColor === 'rgb(255, 192, 203)' || bg.style.backgroundColor === 'pink') ? 'white' : '#FFC0CB';
         }
 
-        function celebrate() {
-            questionText.innerHTML = "Yay! See you soon! &#128150;"; // Heart emoji
-            responseText.innerText = ""; // Clear any previous text
-            
-            // GIF for anime hug/kiss in bed (replace with your GIF if needed)
-            gifImage.src = 'https://media.tenor.com/tHqg31i7XfMAAAAd/anime-love.gif'; 
-            gifImage.style.display = 'block'; // Show the GIF
-            
-            noBtn.style.display = 'none'; // Hide the 'No' button
-            document.getElementById('yesBtn').style.display = 'none'; // Hide 'Yes' button
-            bg.style.backgroundColor = '#FFB6C1'; // Set a final celebratory background color
-        }
+        // تفعيل التحريك عند اللمس أو مرور الماوس
+        noBtn.addEventListener('mouseover', moveNo);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); });
+        noBtn.addEventListener('click', moveNo);
 
-        // Initial random position for 'No' button on load
-        window.onload = () => {
-             moveButton(); // Set initial position
-        };
+        // وظيفة الضغط على YES
+        yesBtn.addEventListener('click', () => {
+            ques.innerHTML = "YAY! SEE YOU SOON! 💋";
+            res.innerHTML = '<img src="https://media.tenor.com/tHqg31i7XfMAAAAd/anime-love.gif">';
+            noBtn.style.display = 'none';
+            yesBtn.style.display = 'none';
+            bg.style.backgroundColor = '#FFB6C1';
+        });
     </script>
 </body>
 </html>

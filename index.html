@@ -103,7 +103,7 @@
         <h1 id="ques">miss me ?</h1>
         
         <div id="static-gif">
-            <img src="ang.gif.gif" id="main-img" style="max-width: 150px; border: 4px solid #000;">
+            <img src="shy.gif.gif" id="main-img" style="max-width: 150px; border: 4px solid #000;">
         </div>
 
         <div class="btn-group" id="main-area" style="display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 100px;">
@@ -145,7 +145,7 @@ function loadLevel(lvl) {
         mainContent.style.display = 'block';
         resetGameStatus(); // تنظيف الشاشة وبدء السؤال 1
     } else {
-        alert("Level " + lvl + " is coming soon! 👾");
+        alert("Level " + lvl + " still empty! 👾");
     }
 }
 
@@ -155,11 +155,11 @@ function handleYesAction() {
     document.getElementById('static-gif').style.display = 'none';
 
     if (currentStep === 1) {
-        res.innerHTML = "<h3>YAY! Answer 1 confirmed! 💋</h3><img src='happy-gif1.gif' style='max-width:200px;'>";
+        res.innerHTML = "<h3>YAY! Answer 1 confirmed! 💋</h3><img src='hehe.gif' style='max-width:200px;'>";
     } else if (currentStep === 2) {
-        res.innerHTML = "<h3>I knew it! ❤️</h3><img src='happy-gif2.gif' style='max-width:200px;'>";
+        res.innerHTML = "<h3>I knew it! ❤️</h3><img src='bebe.gif' style='max-width:200px;'>";
     } else if (currentStep === 3) {
-        res.innerHTML = "<h3>Karkovia wins! 😏🔥</h3><img src='hot-hug.gif' style='max-width:200px;'>";
+        res.innerHTML = "<h3>Karkovia wins! 😏🔥</h3><img src='lick.gif.gf' style='max-width:200px;'>";
     }
 
     nextBtn.style.display = 'block'; // إظهار الزر
@@ -177,17 +177,25 @@ function nextQuestion() {
     mainArea.style.display = 'flex';
 
     if (currentStep === 2) {
-        ques.innerHTML = "Who’s ur owner ?";
+        ques.innerHTML = "Who's ur owner ?";
+        // --- السطر اللي تضيفه هنا ---
+        document.getElementById('main-img').src = "2.gif";
+        
         mainArea.innerHTML = `
             <button class="button" onclick="handleYesAction()">momo</button>
             <button class="button" onclick="handleYesAction()">muhannad</button>
-            <button class="button" onclick="handleYesAction()">karkovia</button>`;
+            <button class="button" onclick="handleYesAction()">karkovia</button>
+        `;
     } else if (currentStep === 3) {
         rosanClicks = 0;
         ques.innerHTML = "Who has the better hugs? be honest... 😏";
+        // --- السطر اللي تضيفه هنا ---
+        document.getElementById('main-img').src = "3.gif";
+
         mainArea.innerHTML = `
             <button id="karkBtn" class="button" onclick="handleYesAction()">karkovia</button>
-            <button id="rosanBtn" class="button" onclick="moveRosan()">rosanlake</button>`;
+            <button id="rosanBtn" class="button" onclick="moveRosan()">rosanlake</button>
+        `;
     } else {
         alert("Level 1 Completed! 🏆");
         backToMenu();

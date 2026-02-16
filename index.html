@@ -194,43 +194,49 @@ function nextQuestion() {
     }
 }
 
+let glitchSpeed = 100; // السرعة الابتدائية (كل ما قل الرقم زادت السرعة)
+
 function moveRosan() {
     const rBtn = document.getElementById('rosanBtn');
     const kBtn = document.getElementById('karkBtn');
     rosanClicks++;
     
-    rBtn.style.position = "absolute"; // تحويله لـ absolute عشان يتحرك بحرية
+    // إعدادات المسار: يرجف حول مكانه الأصلي بدون ما يغطي الزر الثاني
+    rBtn.style.position = "relative"; 
+    rBtn.style.zIndex = "1"; // يخليه تحت زر كركوفيا أو خلفه بشوي
+    kBtn.style.zIndex = "10"; // يضمن إن زر كركوفيا دائماً فوق وقابل للضغط
 
     if (rosanClicks === 1) {
-        rBtn.style.transition = "all 0.5s ease";
-        rBtn.style.left = "150px";
+        // زحفة بسيطة لليسار
+        rBtn.style.transition = "all 0.4s ease";
+        rBtn.style.transform = "translateX(-40px)";
     } else if (rosanClicks === 2) {
-        rBtn.style.left = "-150px";
+        // زحفة بسيطة لليمن
+        rBtn.style.transform = "translateX(40px)";
     } else {
-        // تأثير القلتش النهائي: يلاحق زر كركوفيا ولا يوقف
-        rBtn.style.transition = "all 0.1s linear"; // سرعة جنونية
+        // يبدأ القلتش التدريجي
+        glitchSpeed = Math.max(20, glitchSpeed - 20); // تزيد السرعة مع كل ضغطة إضافية
         
-        const glitchInterval = setInterval(() => {
-            if (currentStep !== 3) { 
-                clearInterval(glitchInterval); // يوقف القلتش إذا انتقلنا للسؤال التالي
+        rBtn.style.transition = "none"; // إلغاء الـ transition عشان الرجفة تكون حادة
+        
+        if (window.rosanInterval) clearInterval(window.rosanInterval);
+        
+        window.rosanInterval = setInterval(() => {
+            if (currentStep !== 3) {
+                clearInterval(window.rosanInterval);
+                rBtn.style.transform = "none";
                 return;
             }
-
-            // حساب موقع زر كركوفيا
-            const kRect = kBtn.getBoundingClientRect();
             
-            // يروح لزر كركوفيا ويرجع بعيد عنه بمسافة عشوائية (تأثير الهزه)
-            const randomX = (Math.random() - 0.5) * 40; 
-            const randomY = (Math.random() - 0.5) * 40;
-
-            rBtn.style.position = 'fixed';
-            rBtn.style.left = (kRect.left + randomX) + 'px';
-            rBtn.style.top = (kRect.top + randomY) + 'px';
+            // حركة عشوائية بسيطة (رجفة) في المسار الأفقي فقط عشان ما يغطي الاسم
+            const randomX = (Math.random() - 0.5) * 60; // يتحرك يمين ويسار بمدى 60 بكسل
+            const randomY = (Math.random() - 0.5) * 10; // حركة راسية بسيطة جداً لا تذكر
             
-        }, 50); // يتحدث كل 50 ملي ثانية
+            rBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            
+        }, glitchSpeed);
     }
 }
-
 function moveElement(el) {
     const maxX = window.innerWidth - el.offsetWidth - 100;
     const maxY = window.innerHeight - el.offsetHeight - 100;

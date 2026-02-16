@@ -108,7 +108,13 @@
 .pixel-text {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
-}   
+}
+        @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(10px); }
+    50% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
     </style>
 </head>
 <body id="bg">
@@ -192,15 +198,7 @@ startBtn.addEventListener('click', () => {
     }
 }
 
-// إضافة تأثير الهزة في الـ CSS
-/*
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(10px); }
-    50% { transform: translateX(-10px); }
-    100% { transform: translateX(0); }
-}
-*/
+
 // دخول الليفل
 function loadLevel(lvl) {
     if (lvl === 1) {

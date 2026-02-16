@@ -127,7 +127,7 @@ function loadLevel(lvl) {
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('menu-screen').style.display = 'block';
     
-    // 2. تصفير الخلفية والنتيجة والسؤال
+    // 2. تصفير لون الخلفية والنتيجة والسؤال
     document.getElementById('bg').style.backgroundColor = 'white';
     document.getElementById('res').innerHTML = ""; 
     document.getElementById('ques').innerHTML = "miss me ?";
@@ -135,24 +135,27 @@ function loadLevel(lvl) {
     // 3. إظهار القيف الأصلي
     document.getElementById('static-gif').style.display = 'block';
 
-    // 4. إرجاع الأزرار لمكانها وتنسيقها الأصلي (حل مشكلة التداخل)
+    // 4. إرجاع الأزرار لمكانها وتنسيقها الأصلي (حل مشكلة الالتصاق)
     const yBtn = document.getElementById('yesBtn');
     const nBtn = document.getElementById('noBtn');
 
     if(yBtn && nBtn) {
+        // إظهارهم وإعادة نوع التموضع
         yBtn.style.display = 'inline-block';
         nBtn.style.display = 'inline-block';
-
-        // إرجاع الاحداثيات والسنتر
         yBtn.style.position = 'absolute';
+        nBtn.style.position = 'absolute';
+
+        // إرجاع الاحداثيات الدقيقة (تعديل السنتر)
         yBtn.style.left = '35%';
         yBtn.style.top = '50%';
         yBtn.style.transform = 'translate(-50%, -50%)';
+        yBtn.style.margin = '0'; // تصفير أي مارجن مفاجئ
 
-        nBtn.style.position = 'absolute';
         nBtn.style.left = '65%';
         nBtn.style.top = '50%';
         nBtn.style.transform = 'translate(-50%, -50%)';
+        nBtn.style.margin = '0'; // تصفير أي مارجن مفاجئ
     }
 }
 
